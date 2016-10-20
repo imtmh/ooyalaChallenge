@@ -10,12 +10,12 @@
 OO.plugin("SampleUIModule", function (OO, _, $, W) {
     /**
      * Custom UI Sample Module
-     * Modules developed using this template can later be embedded 
+     * Modules developed using this template can later be embedded
      * within Ooyala'sâ„¢ player for syndication.
      *
      * A sample UI module to demonstrate how to build a custom UI
      * instead of loading our default UI. This module contains a 
-     * simple play/pause button and scrubber bar. 
+     * simple play/pause button and scrubber bar.
      * Parameters:
      * OO, namespace for PlayerV3
      * _, a reference to underscore.js lib.
@@ -34,14 +34,14 @@ OO.plugin("SampleUIModule", function (OO, _, $, W) {
             '<input class="pauseButton" type="button" value="pause">' +
             '<span>Current Time:</span><span class="currentTime"></span>' +
             '<span>Duration:</span><span class="duration"></span>' +
-            '<div class="slider" style="margin-top:20px; width:640px;"></div>' 
+            '<div class="slider" style="margin-top:20px; width:640px;"></div>'
           + '</div>';
 
     // A constructor for the module class
     // will be called by the player to create an instance of the module
     // First parameter is a reference to a message bus object, which
     // is required to be able to pub/sub to player events.
-    // Second parameter is a unique id assigned to the module for 
+    // Second parameter is a unique id assigned to the module for
     // debugging purposes
     Sample.SampleUIModule = function (mb, id) {
         this.mb = mb; // save message bus reference for later use
@@ -74,7 +74,7 @@ OO.plugin("SampleUIModule", function (OO, _, $, W) {
             this.playerRoot = $("#" + elementId);
             this.rootElement = this.playerRoot.parent();
             this.playerRoot.find(".plugins").append("<div class='fooMessage' " +
-                "style='color:red; text-align:center; font-size:2em;'>" + 
+                "style='color:red; text-align:center; font-size:2em;'>" +
                 "Hello this is a custom UI</div>");
 
             console.log("hello, init here!!!", this.rootElement, this.id);
@@ -116,7 +116,7 @@ OO.plugin("SampleUIModule", function (OO, _, $, W) {
 
         onPlay: function () {
             this.playerRoot.find(".fooMessage").remove();
-            this.rootElement.find('video.video').css('left', '0px'); 
+            this.rootElement.find('video.video').css('left', '0px');
             //this is temporary code.
             this.play();
             this.playing = true;
