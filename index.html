@@ -1,0 +1,32 @@
+<!-- *** ©2012-2013 Ooyala, Inc.All Rights Reserved.*/ -->
+<html>
+    <head>
+        <title>Sample Player Module</title>
+        <script src="http://code.jquery.com/jquery-1.10.1.js" />
+        <script src="http://underscorejs.org/underscore.js" />
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js" />
+        <link href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css' rel='stylesheet' type='text/css'/>
+        <script src="http://player.ooyala.com/v3/19ae359f5174247875e88d5bc2f9ef6?platform=html5-priority" />
+        <script src="https://storage.googleapis.com/gtech-pds-hyd/Vudesh/2015/Nove_Dec/Ooyala/SampleV3module.js" type="text/javascript" />
+    </head>
+    <body>
+        <div id='playerContainer' style='width:640px;height:360px' />
+        <script>
+            var ooyalaPlayer;
+            OO.ready(function() {
+                ooyalaPlayer = OO.Player.create('playerContainer', '', {
+                    playlistsPlugin: {"data":["43ff403a93649cb9e9dd33859efa1b5"]},
+                    autoplay: true,
+                    loop: false,
+                    height: 368,
+                    width: 800,
+            		layout: 'chromeless',
+                    useFirstVideoFromPlaylist: true
+                });
+            });
+        </script>
+        <noscript>
+            <div>You must enable Javascript to watch this video</div>
+        </noscript>
+    </body>
+</html>
