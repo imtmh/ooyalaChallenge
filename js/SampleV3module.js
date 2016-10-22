@@ -10,12 +10,12 @@
 OO.plugin("SampleUIModule", function (OO, _, $, W) {
     /**
      * Custom UI Sample Module
-     * Modules developed using this template can later be embedded 
+     * Modules developed using this template can later be embedded
      * within Ooyala'sâ„¢ player for syndication.
      *
      * A sample UI module to demonstrate how to build a custom UI
      * instead of loading our default UI. This module contains a 
-     * simple play/pause button and scrubber bar. 
+     * simple play/pause button and scrubber bar.
      * Parameters:
      * OO, namespace for PlayerV3
      * _, a reference to underscore.js lib.
@@ -28,20 +28,18 @@ OO.plugin("SampleUIModule", function (OO, _, $, W) {
     $('head').append('<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css">');
 
     // This section contains the HTML content to be used as the UI
-    var CUSTOMER_TEMPLATE = '<div class="customer_ui" style="position:relative; top:20px;' +
-         'height:80px; left:31px; width:640px;">' +
-            '<input class="playButton" type="button" value="play">' +
-            '<input class="pauseButton" type="button" value="pause">' +
+    var CUSTOMER_TEMPLATE = '<div class="customer_ui">' +
+            '<div class="playPause"/>'+
             '<span>Current Time:</span><span class="currentTime"></span>' +
             '<span>Duration:</span><span class="duration"></span>' +
-            '<div class="slider" style="margin-top:20px; width:640px;"></div>' 
-          + '</div>';
+            '<div class="slider" style="margin-top:20px; width:640px;"></div>'
+        +'</div>';
 
     // A constructor for the module class
     // will be called by the player to create an instance of the module
     // First parameter is a reference to a message bus object, which
     // is required to be able to pub/sub to player events.
-    // Second parameter is a unique id assigned to the module for 
+    // Second parameter is a unique id assigned to the module for
     // debugging purposes
     Sample.SampleUIModule = function (mb, id) {
         this.mb = mb; // save message bus reference for later use
@@ -71,11 +69,10 @@ OO.plugin("SampleUIModule", function (OO, _, $, W) {
         // player upon creation.
         // In this section, we use this opportunity to create the custom UI
         onPlayerCreate: function (event, elementId, params) {
+          
             this.playerRoot = $("#" + elementId);
             this.rootElement = this.playerRoot.parent();
-            this.playerRoot.find(".plugins").append("<div class='fooMessage' " +
-                "style='color:red; text-align:center; font-size:2em;'>" + 
-                "Hello this is a custom UI</div>");
+            this.playerRoot.find(".plugins").append("<div class='fooMessage' </div>");
 
             console.log("hello, init here!!!", this.rootElement, this.id);
             $(CUSTOMER_TEMPLATE).insertAfter("#" + elementId);
@@ -84,20 +81,27 @@ OO.plugin("SampleUIModule", function (OO, _, $, W) {
                 stop: _.bind(this.onSliderStop, this),
                 slide: _.bind(this.onSlide, this)
             });
-            this.playButton = this.rootElement.find('.playButton');
-            this.pauseButton = this.rootElement.find('.pauseButton');
-            this.playButton.click(_.bind(this.onPlay, this));
-            this.pauseButton.click(_.bind(this.onPause, this));
-        },
+            const parent = this;
+            W.$(".playPause").click(function() {
+                $(this).toggleClass("active");
+                if(parent.playing){
+                    parent.onPause();
+                }else {
+                    parent.onPlay();
 
+                }
+            });
+        },
 
         // Handles CONTENT_TREE_FETCHED event
         // Second parameter is a content object with details about the
         // content that was loaded into the player
         // In this example, we use the parameter to update duration
         onContentReady: function (event, content) {
+            console.log(content);
             this.duration = content.duration / 1000;
             this.rootElement.find(".duration").html(this.duration);
+            document.getElementById('videoTitle').value=content.title;
             W.$( ".slider" ).slider("option", "max", this.duration);
         },
 
@@ -116,7 +120,7 @@ OO.plugin("SampleUIModule", function (OO, _, $, W) {
 
         onPlay: function () {
             this.playerRoot.find(".fooMessage").remove();
-            this.rootElement.find('video.video').css('left', '0px'); 
+            this.rootElement.find('video.video').css('left', '0px');
             //this is temporary code.
             this.play();
             this.playing = true;
