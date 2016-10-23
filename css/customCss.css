@@ -13,6 +13,11 @@
 	border-radius: 45px;
 	cursor: pointer;
 }
+.slider{
+    .ui-slider-range {
+        background: #8ae234;
+    }
+}
 .playPause:before{
 	content: "";
 	position: absolute;

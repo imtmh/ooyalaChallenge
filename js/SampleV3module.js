@@ -77,6 +77,7 @@ OO.plugin("SampleUIModule", function (OO, _, $, W) {
             console.log("hello, init here!!!", this.rootElement, this.id);
             $(CUSTOMER_TEMPLATE).insertAfter("#" + elementId);
 
+
             W.$( ".slider" ).slider({
                 stop: _.bind(this.onSliderStop, this),
                 slide: _.bind(this.onSlide, this)
@@ -101,7 +102,13 @@ OO.plugin("SampleUIModule", function (OO, _, $, W) {
             console.log(content);
             this.duration = content.duration / 1000;
             this.rootElement.find(".duration").html(this.duration);
-            document.getElementById('videoTitle').value=content.title;
+            this.videoInput = document.getElementById('videoTitle')
+            this.videoInput.onblur = function(e){
+                console.log("onBlur");
+                makeAPICall(content.embed_code, e.target.value);
+            };
+            this.videoInput.value=content.title;
+            
             W.$( ".slider" ).slider("option", "max", this.duration);
         },
 
@@ -147,7 +154,7 @@ OO.plugin("SampleUIModule", function (OO, _, $, W) {
         },
 
         onSlide: function (event, ui) {
-            console.log("onSlide");
+//            console.log("onSlide");
             if (this.playing) {
                 this.pause();
             }
